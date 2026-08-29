@@ -73,14 +73,6 @@
         android:textColor="#CC0000"
         android:paddingBottom="4dp" />
 
-    <TextView
-        android:id="@+id/tv_overlay_status"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="悬浮窗权限：未授权"
-        android:textSize="14sp"
-        android:textColor="#CC0000"
-        android:paddingBottom="16dp" />
 
     <!-- 开始按钮 -->
     <Button
@@ -126,14 +118,5 @@
         android:textColor="#333333"
         android:layout_marginBottom="12dp" />
 
-    <!-- 悬浮窗设置按钮 -->
-    <Button
-        android:id="@+id/btn_open_overlay_settings"
-        android:layout_width="match_parent"
-        android:layout_height="48dp"
-        android:text="开启悬浮窗权限"
-        android:textSize="16sp"
-        android:background="#DDDDDD"
-        android:textColor="#333333" />
 
 </LinearLayout>

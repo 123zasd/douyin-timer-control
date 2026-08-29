@@ -23,11 +23,9 @@ class MainActivity : AppCompatActivity() {
     private var tvSchedule: TextView? = null
     private var tvTimer: TextView? = null
     private var tvAccess: TextView? = null
-    private var tvOverlay: TextView? = null
     private var btnSettings: Button? = null
     private var btnReset: Button? = null
     private var btnAccessSettings: Button? = null
-    private var btnOverlaySettings: Button? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -56,11 +54,9 @@ class MainActivity : AppCompatActivity() {
         tvSchedule = findViewById(R.id.tv_schedule)
         tvTimer = findViewById(R.id.tv_timer)
         tvAccess = findViewById(R.id.tv_accessibility_status)
-        tvOverlay = findViewById(R.id.tv_overlay_status)
         btnSettings = findViewById(R.id.btn_settings)
         btnReset = findViewById(R.id.btn_reset_schedule)
         btnAccessSettings = findViewById(R.id.btn_open_settings)
-        btnOverlaySettings = findViewById(R.id.btn_open_overlay_settings)
         Log.d(TAG, "Views bound")
     }
 
@@ -84,16 +80,6 @@ class MainActivity : AppCompatActivity() {
                 startActivity(Intent(Settings.ACTION_ACCESSIBILITY_SETTINGS))
             } catch (e: Exception) {
                 Log.e(TAG, "accessibility settings failed", e)
-            }
-        }
-
-        btnOverlaySettings?.setOnClickListener {
-            try {
-                val intent = Intent(Settings.ACTION_MANAGE_OVERLAY_PERMISSION)
-                intent.data = android.net.Uri.parse("package:$packageName")
-                startActivity(intent)
-            } catch (e: Exception) {
-                Log.e(TAG, "overlay settings failed", e)
             }
         }
 
@@ -136,9 +122,6 @@ class MainActivity : AppCompatActivity() {
         try {
             val serviceEnabled = isAccessServiceEnabled()
             tvAccess?.text = if (serviceEnabled) "✓ 无障碍服务已启用" else "✗ 请前往设置开启无障碍服务"
-
-            val overlayEnabled = Settings.canDrawOverlays(this)
-            tvOverlay?.text = if (overlayEnabled) "✓ 悬浮窗权限已授权" else "✗ 悬浮窗权限未授权"
         } catch (e: Exception) {
             Log.e(TAG, "checkPermissions failed", e)
         }
