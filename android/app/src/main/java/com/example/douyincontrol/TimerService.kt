@@ -59,7 +59,12 @@ class TimerService : Service() {
         isRunning = true
 
         mainHandler.post {
-            startForeground(NOTIFICATION_ID, buildNotification("管控已启动"))
+            try {
+                startForeground(NOTIFICATION_ID, buildNotification("管控已启动"))
+            } catch (e: Exception) {
+                Log.e("TimerService", "startForeground failed", e)
+                // Continue anyway - service is still running
+            }
         }
 
         timer?.cancel()
