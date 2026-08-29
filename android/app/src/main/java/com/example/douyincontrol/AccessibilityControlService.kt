@@ -1,4 +1,4 @@
-package com.example.douyincontrol
+package com.example.hourlimiter
 
 import android.accessibilityservice.AccessibilityService
 import android.app.NotificationChannel

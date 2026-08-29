@@ -1,4 +1,4 @@
-package com.example.douyincontrol
+package com.example.hourlimiter
 
 import android.app.NotificationChannel
 import android.app.NotificationManager

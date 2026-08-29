@@ -34,11 +34,11 @@ if (!keystoreFile.exists()) {
 }
 
 android {
-    namespace 'com.example.douyincontrol'
+    namespace 'com.example.hourlimiter'
     compileSdk 34
 
     defaultConfig {
-        applicationId "com.example.douyincontrol"
+        applicationId "com.example.hourlimiter"
         minSdk 26
         targetSdk 34
         versionCode 1

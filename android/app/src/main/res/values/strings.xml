@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">抖音管控</string>
+    <string name="app_name">时段管家</string>
     <string name="accessibility_service_description">监控抖音使用时长，超过设定时间自动限制使用。请保持此服务启用以确保管控生效。</string>
     <string name="format_allowed">%02d:%02d 可用</string>
     <string name="format_blocked">剩余 %02d:%02d 后可用</string>

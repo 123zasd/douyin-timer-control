@@ -1,4 +1,4 @@
-package com.example.douyincontrol
+package com.example.hourlimiter
 
 import android.content.Intent
 import android.os.Bundle
