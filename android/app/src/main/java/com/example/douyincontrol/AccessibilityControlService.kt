@@ -1,7 +1,6 @@
 package com.example.douyincontrol
 
 import android.accessibilityservice.AccessibilityService
-import android.accessibilityservice.AccessibilityServiceInfo
 import android.app.NotificationChannel
 import android.app.NotificationManager
 import android.content.Context
@@ -43,7 +42,6 @@ class AccessibilityControlService : AccessibilityService() {
         Log.d(TAG, "AccessibilityService connected, prefs initialized")
 
         serviceInfo = serviceInfo?.apply {
-            flags = flags or AccessibilityServiceInfo.FLAG_RETRIEVE_INTERACTIVE_WINDOWS
             notificationTimeout = 100
         }
         startForegroundNotification()
