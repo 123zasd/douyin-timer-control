@@ -1,10 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <style name="Theme.DouyinControl" parent="@android:style/Theme.Material.Light.NoActionBar">
-        <item name="android:colorPrimary">#6200EE</item>
-        <item name="android:colorPrimaryDark">#3700B3</item>
-        <item name="android:colorAccent">#03DAC5</item>
-        <item name="android:windowBackground">#FFFFFF</item>
+    <!-- Use MaterialComponents theme, it is the most stable and widely compatible -->
+    <style name="Theme.DouyinControl" parent="Theme.MaterialComponents.DayNight.NoActionBar">
+        <item name="colorPrimary">#6200EE</item>
+        <item name="colorPrimaryVariant">#3700B3</item>
+        <item name="colorOnPrimary">#FFFFFF</item>
+        <item name="colorSecondary">#03DAC5</item>
+        <item name="colorSecondaryVariant">#018786</item>
+        <item name="colorOnSecondary">#000000</item>
+        <item name="android:colorBackground">#FFFFFF</item>
         <item name="android:statusBarColor">#3700B3</item>
+        <item name="android:navigationBarColor">#FFFFFF</item>
     </style>
 </resources>
