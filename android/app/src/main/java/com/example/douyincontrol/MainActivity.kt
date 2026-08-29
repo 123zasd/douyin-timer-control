@@ -212,8 +212,10 @@ class MainActivity : AppCompatActivity() {
 
             dialog.findViewById<com.google.android.material.button.MaterialButton>(R.id.btn_save_settings)
                 ?.setOnClickListener {
-                    val period = periodInput?.text?.toIntOrNull() ?: 60
-                    val allow = allowInput?.text?.toIntOrNull() ?: 15
+                    val periodText = periodInput?.text?.toString() ?: ""
+                    val allowText = allowInput?.text?.toString() ?: ""
+                    val period = periodText.toIntOrNull() ?: 60
+                    val allow = allowText.toIntOrNull() ?: 15
                     if (period >= allow && allow > 0 && period <= 1440) {
                         prefs.edit()
                             .putInt("period_minutes", period)

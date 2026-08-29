@@ -220,7 +220,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="8dp"
-                        android:text="• 首次使用请先开启无障碍服务\n• 按自然小时周期运行（如 10:00-10:15 可用）\n• 超过可用时间后自动拦截抖音\n• 可在设置中调整周期和可用时长"
+                        android:text="• 首次使用请先开启无障碍服务&#10;• 按自然小时周期运行（如 10:00-10:15 可用）&#10;• 超过可用时间后自动拦截抖音&#10;• 可在设置中调整周期和可用时长"
                         android:textColor="#666666"
                         android:textSize="13sp"
                         android:lineSpacingMultiplier="1.4" />

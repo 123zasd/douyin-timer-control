@@ -6,6 +6,7 @@ import android.app.Notification
 import android.app.NotificationChannel
 import android.app.NotificationManager
 import android.content.Context
+import android.content.SharedPreferences
 import android.util.Log
 import android.view.accessibility.AccessibilityEvent
 import androidx.core.app.NotificationCompat
@@ -20,6 +21,7 @@ class AccessibilityControlService : AccessibilityService() {
         private var sessionTimer: Timer? = null
         private var sessionStartTime = 0L
         private var isBlocking = false
+        private var prefs: SharedPreferences? = null
 
         fun checkAndBlock() {
             // 由 TimerService 调用，检查当前是否在使用抖音
@@ -28,10 +30,9 @@ class AccessibilityControlService : AccessibilityService() {
 
     override fun onServiceConnected() {
         Log.d(TAG, "无障碍服务已连接")
+        prefs = applicationContext.getSharedPreferences("douyin_prefs", Context.MODE_PRIVATE)
         serviceInfo = serviceInfo?.apply {
-            flags = flags or
-                AccessibilityServiceInfo.FLAG_REQUEST_ACCESSIBILITY_KEY or
-                AccessibilityServiceInfo.FLAG_RETRIEVE_INTERACTIVE_WINDOWS
+            flags = flags or AccessibilityServiceInfo.FLAG_RETRIEVE_INTERACTIVE_WINDOWS
             notificationTimeout = 100
         }
         startForegroundNotification()
@@ -56,19 +57,18 @@ class AccessibilityControlService : AccessibilityService() {
     private fun onDouyinFocused() {
         if (!TimerService.isRunning) return
 
-        // 开始计时
+        val allowMinutes = prefs?.getInt("allow_minutes", 15) ?: 15
+        Log.d(TAG, "抖音会话开始，限制时长: ${allowMinutes}分钟")
+
         if (!isBlocking) {
             isBlocking = true
             sessionStartTime = System.currentTimeMillis()
 
-            // 每秒检查是否超时
             sessionTimer = Timer("SessionTracker", true).apply {
                 scheduleAtFixedRate(object : java.util.TimerTask() {
                     override fun run() {
                         val elapsed = System.currentTimeMillis() - sessionStartTime
-                        val prefs = android.content.ContextWrapper(applicationContext)
-                            .getSharedPreferences("douyin_prefs", Context.MODE_PRIVATE)
-                        val allowMillis = (prefs.getInt("allow_minutes", 15) * 60 * 1000L)
+                        val allowMillis = (allowMinutes * 60 * 1000L)
 
                         if (elapsed >= allowMillis) {
                             Log.d(TAG, "抖音使用超时，执行拦截")
@@ -80,13 +80,11 @@ class AccessibilityControlService : AccessibilityService() {
                     }
                 }, 1000, 1000)
             }
-            Log.d(TAG, "抖音会话开始，限制时长: ${prefs.getInt("allow_minutes", 15)}分钟")
         }
     }
 
     private fun blockApp() {
         try {
-            // 方法1：按 HOME 键返回首页
             performGlobalAction(GLOBAL_ACTION_HOME)
             Log.d(TAG, "已返回首页")
         } catch (e: Exception) {
