@@ -4,35 +4,30 @@ import android.content.Intent
 import android.os.Bundle
 import android.provider.Settings
 import android.util.Log
-import android.view.View
 import android.widget.Button
 import android.widget.EditText
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
-import androidx.appcompat.widget.Toolbar
 import androidx.core.content.ContextCompat
-import androidx.core.view.WindowCompat
 import androidx.preference.PreferenceManager
-import com.google.android.material.button.MaterialButton
-import com.google.android.material.snackbar.Snackbar
 import java.util.Calendar
 
 class MainActivity : AppCompatActivity() {
 
     private val TAG = "MainActivity"
 
-    private lateinit var btnStartService: MaterialButton
+    private lateinit var btnStartService: Button
     private lateinit var tvServiceStatus: TextView
     private lateinit var tvSchedule: TextView
     private lateinit var tvTimer: TextView
     private lateinit var tvAccessibilityStatus: TextView
     private lateinit var tvOverlayStatus: TextView
-    private lateinit var btnOpenSettings: MaterialButton
-    private lateinit var btnOpenOverlaySettings: MaterialButton
-    private lateinit var btnSettings: MaterialButton
-    private lateinit var btnResetSchedule: MaterialButton
+    private lateinit var btnOpenSettings: Button
+    private lateinit var btnOpenOverlaySettings: Button
+    private lateinit var btnSettings: Button
+    private lateinit var btnResetSchedule: Button
 
     private var lastStatusUpdate = 0L
 
@@ -43,12 +38,9 @@ class MainActivity : AppCompatActivity() {
 
             setContentView(R.layout.activity_main)
 
-            val toolbar = findViewById<Toolbar>(R.id.toolbar)
-            if (toolbar != null) {
-                setSupportActionBar(toolbar)
-                supportActionBar?.subtitle = "抖音时间管控"
-            } else {
-                Log.w(TAG, "Toolbar is null")
+            val titleView = findViewById<TextView>(R.id.tv_title)
+            if (titleView != null) {
+                titleView.text = "抖音时间管控"
             }
 
             bindViews()
