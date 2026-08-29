@@ -3,6 +3,36 @@ plugins {
     id 'org.jetbrains.kotlin.android'
 }
 
+// ============================================================
+// 自动生成签名 keystore（若不存在），并用它给 debug APK 签名
+// 这样构建出的 app-debug.apk 就是正式签名版，避免"未知来源"提示
+// ============================================================
+def keystoreFile = rootProject.file('douyin.keystore')
+def keystorePassword = 'douyin123'
+def keyAliasName = 'douyin'
+
+if (!keystoreFile.exists()) {
+    try {
+        def keytoolExe = System.getProperty('os.name').toLowerCase().contains('windows')
+                ? 'keytool.exe' : 'keytool'
+        def proc = [keytoolExe,
+                    '-genkeypair',
+                    '-keystore', keystoreFile.absolutePath,
+                    '-alias', keyAliasName,
+                    '-keyalg', 'RSA',
+                    '-keysize', '2048',
+                    '-validity', '10000',
+                    '-storepass', keystorePassword,
+                    '-keypass', keystorePassword,
+                    '-dname', 'CN=DouyinControl, OU=Dev, O=Dev, L=Beijing, ST=Beijing, C=CN'
+        ].execute()
+        proc.waitFor()
+        println ">>> keystore generated: ${keystoreFile.absolutePath} (exit=${proc.exitValue()})"
+    } catch (Exception e) {
+        println ">>> keystore generation skipped: ${e.message}"
+    }
+}
+
 android {
     namespace 'com.example.douyincontrol'
     compileSdk 34
@@ -16,10 +46,24 @@ android {
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
 
+    signingConfigs {
+        custom {
+            storeFile keystoreFile
+            storePassword keystorePassword
+            keyAlias keyAliasName
+            keyPassword keystorePassword
+        }
+    }
+
     buildTypes {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+            signingConfig signingConfigs.custom
+        }
+        debug {
+            // 关键：debug 构建也用正式 keystore 签名
+            signingConfig signingConfigs.custom
         }
     }
 
